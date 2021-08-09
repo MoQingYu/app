@@ -1,1 +1,3 @@
-dkms.conf
+/node_modules
+
+/dist

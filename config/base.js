@@ -7,9 +7,8 @@ const autoprofixer = require("autoprefixer");
 const projectRoot = process.cwd();
 
 module.exports = {
-  mode: "production",
   entry: {
-    app: path.join(projectRoot, "src/index.ts")
+    app: path.join(projectRoot, "src/index")
   },
   output: {
     path: path.join(projectRoot, "dist"),
@@ -53,15 +52,11 @@ module.exports = {
         ]
       }, {
         test: /\.(jpg|jpeg|png|gif|)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192,
-              name: "[name]_[hash:8].[ext]" 
-            }
-          }
-        ]
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name]_[hash:8][ext]'
+        },
+        loader: "image-webpack-loader"
       }
     ]
   },
@@ -70,10 +65,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/[name]_[contenthash:8].css",
     }),
-    new HtmlPlugin()
+    new HtmlPlugin({
+      cache: true,
+      favicon: false,
+      template: path.join(projectRoot, "public/index.html")
+    })
   ],
-  devServer: {
-    contentBase: path.join(projectRoot, "dist"),
-    port: 3000
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"]
   }
 }
