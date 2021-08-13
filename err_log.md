@@ -10,4 +10,6 @@
   - 解决方案：配置hosts文件 199.232.28.133 raw.githubusercontent.com
   - 注意如果该网址的IP地址依然不行，请更换其他的IP地址
 
-3. 
+3. Missing semi-colon or unrecognised media features on import
+  - 原因：在less文件中@import其他less文件时，没有加分号(;)
+  - 解决方案：每次在less文件中@import之后必须加分号(;)

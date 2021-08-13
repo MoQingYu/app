@@ -1,6 +1,7 @@
 const { merge } = require("webpack-merge");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const baseConfig = require("./base");
 
 const prodConfig = {
@@ -15,7 +16,8 @@ const prodConfig = {
       new TerserPlugin({
         parallel: 4,
         extractComments: false,
-      })
+      }),
+      new BundleAnalyzerPlugin()
     ]
   }
 }
