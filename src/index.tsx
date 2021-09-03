@@ -5,10 +5,13 @@ import {
   Route,
   Switch 
 } from "react-router-dom";
+import { Provider } from "react-redux";
 import { createBrowserHistory } from "history"
 import Login from "./pages/login";
 import LayoutBasic from "./layout";
+import configStore from "./store";
 
+const store = configStore();
 const history = createBrowserHistory();
 
 ReactDom.render(
@@ -16,7 +19,9 @@ ReactDom.render(
     <Switch>
       <Route path="/login" component={Login}/>
       <Route path="/">
-        <LayoutBasic />
+        <Provider store={store}>
+          <LayoutBasic />
+        </Provider>
       </Route>
     </Switch>
   </Router>,

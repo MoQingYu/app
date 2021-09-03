@@ -83,6 +83,7 @@ module.exports = {
       "@api": path.join(projectRoot, "src/api"),
       "@components": path.join(projectRoot, "src/components"),
       "@utils": path.join(projectRoot, "src/utils"),
+      "@store": path.join(projectRoot, "src/store"),
     },
     extensions: [".js", ".jsx", ".ts", ".tsx"]
   }

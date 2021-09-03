@@ -1,4 +1,6 @@
 import { message } from "antd";
+import cache from "./cache";
+import { SHOP_TOKEN } from "./constants"
 
 const codeMessage = {
   400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
@@ -19,8 +21,9 @@ class Fetch {
   headers: Headers;
 
   constructor() {
+    const token = cache.get(SHOP_TOKEN);
     this.headers = new Headers({
-      "Authorization": "Basic YnJvd3Nlcjo="
+      "Authorization": token ? `Bearer ${token}` : "Basic YnJvd3Nlcjo="
     });
   }
 
@@ -35,7 +38,7 @@ class Fetch {
   }
 
   setTokenInHeader(token: string) {
-    this.headers.set("Authorization", token);
+    this.headers.set("Authorization", `Bearer ${token}`);
   }
 
   send(url, method, params?: any): Promise<any>  {

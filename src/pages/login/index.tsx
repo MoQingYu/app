@@ -3,6 +3,7 @@ import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { getToken, getLogin } from "@api/login";
 import cache from "@utils/cache";
+import fetch from "@utils/fetch";
 import { SHOP_TOKEN } from "@utils/constants";
 import { L_FormItem } from "@components/index";
 import "./style.less";
@@ -42,6 +43,7 @@ const Login: React.FC<any> = ({history}) => {
       getLogin(formData).then(data => {
         if (data && data.access_token) {
           cache.set(SHOP_TOKEN, data.access_token);
+          fetch.setTokenInHeader(data.access_token);
           history.push("/")
         } else {
           cache.remove(SHOP_TOKEN);
