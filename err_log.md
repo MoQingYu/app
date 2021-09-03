@@ -13,3 +13,17 @@
 3. Missing semi-colon or unrecognised media features on import
   - 原因：在less文件中@import其他less文件时，没有加分号(;)
   - 解决方案：每次在less文件中@import之后必须加分号(;)
+
+4. .bezierEasingMixin();
+  - 原因：内联JavaScript没有启用
+  - 解决方案：
+      ```javascript
+        {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+    ```

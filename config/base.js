@@ -42,7 +42,14 @@ module.exports = {
               }
             }
           },
-          "less-loader"
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
         ]
       }, {
         test: /\.css$/,
@@ -72,6 +79,11 @@ module.exports = {
     })
   ],
   resolve: {
+    alias: {
+      "@api": path.join(projectRoot, "src/api"),
+      "@components": path.join(projectRoot, "src/components"),
+      "@utils": path.join(projectRoot, "src/utils"),
+    },
     extensions: [".js", ".jsx", ".ts", ".tsx"]
   }
 }
