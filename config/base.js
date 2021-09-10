@@ -84,7 +84,9 @@ module.exports = {
       "@components": path.join(projectRoot, "src/components"),
       "@utils": path.join(projectRoot, "src/utils"),
       "@store": path.join(projectRoot, "src/store"),
+      "@models": path.join(projectRoot, "src/models"),
+      "@config": path.join(projectRoot, "src/config"),
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx"]
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
   }
 }

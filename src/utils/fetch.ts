@@ -1,6 +1,11 @@
 import { message } from "antd";
 import cache from "./cache";
-import { SHOP_TOKEN } from "./constants"
+import { SHOP_TOKEN } from "@config/constants";
+import {
+  ResponseModel,
+  ParamsModel,
+  FetchMethodModel
+} from "@models/fetch";
 
 const codeMessage = {
   400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
@@ -21,13 +26,13 @@ class Fetch {
   headers: Headers;
 
   constructor() {
-    const token = cache.get(SHOP_TOKEN);
+    const token: string = cache.get(SHOP_TOKEN);
     this.headers = new Headers({
       "Authorization": token ? `Bearer ${token}` : "Basic YnJvd3Nlcjo="
     });
   }
 
-  isFormData(params) {
+  isFormData(params: any) {
     return Object.prototype.toString.call(params) === "[object FormData]";
   }
 
@@ -41,7 +46,7 @@ class Fetch {
     this.headers.set("Authorization", `Bearer ${token}`);
   }
 
-  send(url, method, params?: any): Promise<any>  {
+  send(url, method: FetchMethodModel, params?: ParamsModel): Promise<void>  {
     return new Promise<void>((resolve, reject) => {
       fetch(url, {
         method,
@@ -58,11 +63,13 @@ class Fetch {
     })
   }
 
-  errorHandle(res: any) {
+  errorHandle(res: ResponseModel) {
     const { status } = res;
     if(codeMessage[status]) {
       message.error(codeMessage[status], ()=> {
         if(status == 401) {
+          this.headers.set("Authorization",  "Basic YnJvd3Nlcjo=");
+          cache.remove(SHOP_TOKEN);
           if (!window.location.pathname.includes('/login')) {
             window.location.href = "/login";
           }
@@ -73,19 +80,19 @@ class Fetch {
     }
   } 
 
-  post(url, params = {}, headers?: any): Promise<any> {
+  post(url: string, params: any = {}, headers?: any): Promise<any> {
     this.setHeaders(headers);
-    let newParams: any = "";
+    let newParams: ParamsModel = "";
     if(this.isFormData(params)) {
-      newParams = params;
+      newParams = params as FormData;
     } else if(Object.keys(params)?.length) {
       newParams = JSON.stringify(params);
     }
     return this.send(url, "POST", newParams)
   }
   
-  get(url, params: any = {}): Promise<any> {
-    let newUrl = url
+  get(url: string, params: any = {}): Promise<any> {
+    let newUrl: string = url
     const keys = Object.keys(params);
     if(keys.length) {
       let query =  keys.reduce((list: String[], key)=> {

@@ -33,9 +33,7 @@ const LayoutBasic: React.FC<LayoutModal> = (props) => {
 
 const mapDispatchToProps = (dispatch)=>(
   bindActionCreators(
-    {
-      fetchUser
-    }, 
+    { fetchUser },
     dispatch
   )
 )

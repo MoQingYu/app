@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { getToken, getLogin } from "@api/login";
 import cache from "@utils/cache";
 import fetch from "@utils/fetch";
-import { SHOP_TOKEN } from "@utils/constants";
+import { SHOP_TOKEN } from "@config/constants";
 import { L_FormItem } from "@components/index";
 import "./style.less";
 
