@@ -27,8 +27,10 @@ class Fetch {
 
   constructor() {
     const token: string = cache.get(SHOP_TOKEN);
+    // 默认header
     this.headers = new Headers({
-      "Authorization": token ? `Bearer ${token}` : "Basic YnJvd3Nlcjo="
+      "Authorization": token ? `Bearer ${token}` : "Basic YnJvd3Nlcjo=",
+      'Content-Type': "application/json; charset=utf-8"
     });
   }
 
@@ -46,8 +48,8 @@ class Fetch {
     this.headers.set("Authorization", `Bearer ${token}`);
   }
 
-  send(url, method: FetchMethodModel, params?: ParamsModel): Promise<void>  {
-    return new Promise<void>((resolve, reject) => {
+  send<T>(url, method: FetchMethodModel, params?: ParamsModel): Promise<ResponseModel<T>>  {
+    return new Promise<T>((resolve, reject) => {
       fetch(url, {
         method,
         body: params,
@@ -63,7 +65,7 @@ class Fetch {
     })
   }
 
-  errorHandle(res: ResponseModel) {
+  errorHandle<T>(res: ResponseModel<T>) {
     const { status } = res;
     if(codeMessage[status]) {
       message.error(codeMessage[status], ()=> {
@@ -80,7 +82,7 @@ class Fetch {
     }
   } 
 
-  post(url: string, params: any = {}, headers?: any): Promise<any> {
+  post<T, R>(url: string, params: T = {} as T, headers?: any): Promise<ResponseModel<R>> {
     this.setHeaders(headers);
     let newParams: ParamsModel = "";
     if(this.isFormData(params)) {
@@ -88,10 +90,10 @@ class Fetch {
     } else if(Object.keys(params)?.length) {
       newParams = JSON.stringify(params);
     }
-    return this.send(url, "POST", newParams)
+    return this.send<R>(url, "POST", newParams)
   }
   
-  get(url: string, params: any = {}): Promise<any> {
+  get<T, R>(url: string, params: T = {} as T): Promise<ResponseModel<R>> {
     let newUrl: string = url
     const keys = Object.keys(params);
     if(keys.length) {
@@ -101,7 +103,7 @@ class Fetch {
       }, [])
       newUrl = `${newUrl}?${query.join("&")}`
     }
-    return this.send(newUrl, "GET")
+    return this.send<R>(newUrl, "GET")
   }
 }
 

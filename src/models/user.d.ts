@@ -44,3 +44,14 @@ export type MenuModel = {
   path: string;
   routes: MenuModel[]
 }
+
+export type LonginRequest = {
+  username: string
+  password: string
+}
+
+export type RegisterRequest = LonginRequest & {
+  confirmPassword: string
+} 
+
+export type RegisterResponse = boolean;

@@ -1,24 +1,22 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { signin } from "@api/user";
-import cache from "@utils/cache";
-import { SHOP_TOKEN } from "@config/constants";
-import {
-  LonginRequest
-} from "@models/user";
+import { signup } from "@api/user";
 import { L_FormItem } from "@components/index";
+import {
+  RegisterRequest
+} from "@models/user";
 import "./style.less";
 
-const Login: React.FC<any> = ({history}) => {
+const Register: React.FC<any> = ({history}) => {
   const [form] = Form.useForm();
 
-  const _handleLogin = () => {
+  const _handleSingup = () => {
     form.validateFields()
-      .then((res: LonginRequest)=> {
-        signin(res).then(res=> {
+      .then((res: RegisterRequest)=> {
+        signup(res).then(res=> {
           if(res.status === 200 && res.data) {
-            history.push("/");
+            history.replace("/signin");
           } else {
             message.error(res.message);
           }
@@ -31,10 +29,21 @@ const Login: React.FC<any> = ({history}) => {
     showLabel: true
   }
 
+  const _validatorConfirm = (_: any, value: string) => {
+    if(!value) {
+      return Promise.reject("请输入")
+    }
+    const pwd = form.getFieldValue("password");
+    if(pwd !== value) {
+      return Promise.reject("两次密码不一致")
+    }
+    return Promise.resolve();
+  }
+
   return (
-    <div className="signin-container">
-      <div className="signin-card">
-        <div className="title">登录</div>
+    <div className="signup-container">
+      <div className="signup-card">
+        <div className="title">注册</div>
         <Form 
           form={form}
           layout="vertical"
@@ -50,7 +59,7 @@ const Login: React.FC<any> = ({history}) => {
               autoComplete="off" 
               placeholder="用户名" 
               size="large"
-              onPressEnter={_handleLogin}
+              onPressEnter={_handleSingup}
             />
           </L_FormItem>
           <L_FormItem 
@@ -63,16 +72,30 @@ const Login: React.FC<any> = ({history}) => {
               size="large"
               prefix={<LockOutlined />}
               placeholder="密码" 
-              onPressEnter={_handleLogin}
+              onPressEnter={_handleSingup}
+            />
+          </L_FormItem>
+          <L_FormItem 
+            name="confirmPassword" 
+            initialValue="123qweASD"
+            label="确认密码"
+            rules={[{validator: _validatorConfirm}]}
+            {..._formProps}
+          >
+            <Input.Password 
+              size="large"
+              prefix={<LockOutlined />}
+              placeholder="密码" 
+              onPressEnter={_handleSingup}
             />
           </L_FormItem>
           <Button 
             type="primary"
             size="large"
-            className="signin-btn"
-            onClick={_handleLogin}
+            className="signup-btn"
+            onClick={_handleSingup}
           >
-            登录
+            注册
           </Button>
         </Form>
       </div>
@@ -80,4 +103,4 @@ const Login: React.FC<any> = ({history}) => {
   )
 }
 
-export default Login
+export default Register

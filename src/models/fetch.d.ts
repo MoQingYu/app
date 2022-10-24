@@ -1,9 +1,9 @@
 import { MenuModel } from "./user";
 
-export type ResponseModel = {
+export type ResponseModel<T> = {
   status?: number | string;
   message?: string;
-  data?: any;
+  data?: T;
   menu?: MenuModel[]
 }
 

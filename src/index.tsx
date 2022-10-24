@@ -8,6 +8,7 @@ import {
 import { Provider } from "react-redux";
 import { createBrowserHistory } from "history"
 import Login from "./pages/login";
+import Register from "./pages/register";
 import LayoutBasic from "./layout";
 import configStore from "./store";
 
@@ -17,7 +18,8 @@ const history = createBrowserHistory();
 ReactDom.render(
   <Router history={history}>
     <Switch>
-      <Route path="/login" component={Login}/>
+      <Route path="/signin" component={Login}/>
+      <Route path="/signup" component={Register}/>
       <Route path="/">
         <Provider store={store}>
           <LayoutBasic />

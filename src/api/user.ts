@@ -1,7 +1,11 @@
 import fetch from "@utils/fetch";
+import {
+  LonginRequest,
+  RegisterRequest
+} from "@models/user";
 
-// 获取用户信息
-export const getSysUser = () => fetch.get('/api/uaa/users/getSysUser')
+// 用户注册
+export const signup = (params: RegisterRequest) => fetch.post<RegisterRequest, boolean>('/api/user/signup', params)
 
-//获取左侧侧边栏的信息
-export const getMenuData = (params) => fetch.post('/api/account/sysuserdetail/sysdirectory', params)
+// 用户注册
+export const signin = (params: LonginRequest) => fetch.post<LonginRequest, boolean>('/api/user/signin', params)

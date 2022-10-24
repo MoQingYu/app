@@ -14,7 +14,7 @@ const devConfig = {
     watchContentBase: true,
     proxy: {
       '/api': {
-        target: 'https://boss-dev.fengyouhui.net/be/api',
+        target: 'http://localhost:3030/',
         pathRewrite: { '^/api': '' },
         secure: false,
         changeOrigin: true,

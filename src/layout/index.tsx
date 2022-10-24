@@ -12,10 +12,9 @@ type LayoutModal = {
 }
 
 const LayoutBasic: React.FC<LayoutModal> = (props) => {
-  const { fetchUser } = props;
 
   useEffect(()=> {
-    fetchUser();
+    
   }, [])
 
   return (
