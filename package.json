@@ -46,5 +46,10 @@
   "devDependencies": {
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-server": "^3.11.2"
-  }
+  },
+  "browsersList": [
+    ">0.2%",      
+    "not dead",
+    "last 2 versions"
+  ]
 }
