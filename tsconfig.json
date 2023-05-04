@@ -1,34 +1,19 @@
 {
   "compilerOptions": {
-    // "outDir": "build/dist",
-    "module": "esnext",
-    "target": "es2016",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "baseUrl": ".",
-    "jsx": "react",
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "rootDirs": ["/src"],
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": false,
-    "experimentalDecorators": true,
-    "esModuleInterop":true,
-    "skipLibCheck": true, 
+    "target": "es2016", // 编译目标
+    "jsx": "react-jsx", // 转换react的语法，不需要再引入React
+    "module": "commonjs", // 模块化方案
+    "resolveJsonModule": true, // 支持导入 JSON 模块
+    "esModuleInterop": true, // 允许使用es6的模块化方案
+    "experimentalDecorators": true, // 开启装饰器
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
+    "strict": true, // 开启严格模式
+    "skipLibCheck": true, // 跳过检查node_modules中的库文件
+    "typeRoots": ["node_modules/@types", "typings/*.d.ts"], // 指定类型文件的目录
+    "baseUrl": "./", // 指定非相对模块的基本目录
     "paths": {
-      "@api/*": ["src/api/*"],
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@store/*": ["src/store/*"],
-      "@models/*": ["src/models/*"],
-      "@config/*": ["src/config/*"]
-    }  
+      "@/*": ["src/*"] // 指定路径别名，需要配合webpack的alias使用
+    }
   },
-  "include": ["./src"],
-  "exclude": [
-    "node_modules",
-    "config"
-  ]
+  "include": ["src/**/*", "typings/*.d.ts"] // 指定需要编译的文件
 }

@@ -1,31 +1,8 @@
-import React from "react";
-import ReactDom from "react-dom";
-import { 
-  BrowserRouter as Router,
-  Route,
-  Switch 
-} from "react-router-dom";
-import { Provider } from "react-redux";
-import { createBrowserHistory } from "history"
-import Login from "./pages/login";
-import Register from "./pages/register";
-import LayoutBasic from "./layout";
-import configStore from "./store";
+import { createRoot } from 'react-dom/client'
+import App from './App'
 
-const store = configStore();
-const history = createBrowserHistory();
+const root = document.getElementById('root')
 
-ReactDom.render(
-  <Router history={history}>
-    <Switch>
-      <Route path="/signin" component={Login}/>
-      <Route path="/signup" component={Register}/>
-      <Route path="/">
-        <Provider store={store}>
-          <LayoutBasic />
-        </Provider>
-      </Route>
-    </Switch>
-  </Router>,
-  document.getElementById("root")
-)
+if (root) {
+  createRoot(root).render(<App />)
+}
